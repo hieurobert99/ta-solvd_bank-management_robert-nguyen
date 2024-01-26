@@ -21,16 +21,6 @@ import javax.xml.stream.events.XMLEvent;
 
 
 public class Parser {
-    public static void parseXMLWithDOM(File file) {
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(file);
-            document.getChildNodes();
-        } catch (ParserConfigurationException | IOException | SAXException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public static void parseXMLWithSAX(File file) {
         try {
@@ -42,18 +32,6 @@ public class Parser {
         }
     }
 
-    public static void parseXMLWithStAX(File file) {
-        XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
-        try (FileInputStream fileInputStream = new FileInputStream(file)) {
-            XMLEventReader reader = xmlInputFactory.createXMLEventReader(fileInputStream);
-            while(reader.hasNext()) {
-                XMLEvent event = reader.nextEvent();
-            }
-        } catch (IOException | XMLStreamException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public static void parseXMLWithJAXB(File file){
         try {
             JAXBContext context = JAXBContext.newInstance(Bank.class);
@@ -61,6 +39,16 @@ public class Parser {
             Bank bank = (Bank) unmarshaller.unmarshal(file);
             processBankObject(bank);
         } catch (JAXBException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void parseJSONWithJackson(File file){
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            Bank bank = mapper.readValue(file, Bank.class);
+            processBankObject(bank);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -90,15 +78,27 @@ public class Parser {
         }
     }
 
-    public static void parseJSONWithJackson(File file){
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            Bank bank = mapper.readValue(file, Bank.class);
-            processBankObject(bank);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
+//    public static void parseXMLWithDOM(File file) {
+//        try {
+//            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+//            DocumentBuilder builder = factory.newDocumentBuilder();
+//            Document document = builder.parse(file);
+//            document.getChildNodes();
+//        } catch (ParserConfigurationException | IOException | SAXException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//    public static void parseXMLWithStAX(File file) {
+//        XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
+//        try (FileInputStream fileInputStream = new FileInputStream(file)) {
+//            XMLEventReader reader = xmlInputFactory.createXMLEventReader(fileInputStream);
+//            while(reader.hasNext()) {
+//                XMLEvent event = reader.nextEvent();
+//            }
+//        } catch (IOException | XMLStreamException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
 }

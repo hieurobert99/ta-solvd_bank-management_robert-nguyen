@@ -1,0 +1,40 @@
+{
+  "id": 1,
+  "name": "MBank",
+  "addressId": 1,
+  "customers": [
+    {
+      "id": 1,
+      "firstName": "John",
+      "lastName": "Smith",
+      "addressId": 2,
+      "bankId": 1,
+      "accounts": [
+        {
+          "id": 1,
+          "type": "Premium",
+          "currency": "PLN",
+          "balance": 1000.00,
+          "customerId": 1
+        },
+        {
+          "id": 2,
+          "type": "Standard",
+          "currency": "USD",
+          "balance": 50.50,
+          "customerId": 1
+        }
+      ]
+    }
+  ],
+  "employees": [
+    {
+      "id": 1,
+      "firstName": "Robert",
+      "lastName": "Nguyen",
+      "addressId": 3,
+      "bankId": 1
+    }
+  ]
+
+}

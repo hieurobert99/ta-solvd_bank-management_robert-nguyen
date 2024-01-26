@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.bankmanagement.persistence.AddressRepository">
+    <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO address(street, city) values (#{street}, #{city})
+    </insert>
+
+    <select id="findById" resultMap="AddressResultMap">
+        SELECT id, street, city
+        FROM address
+        WHERE b.id = #{id}
+    </select>
+
+    <resultMap id="AddressResultMap" type="com.solvd.bankmanagement.domain.Address" autoMapping="false">
+        <id property="id" column="id"/>
+        <result property="street" column="street"/>
+        <result property="city" column="city"/>
+    </resultMap>
+</mapper>

@@ -1,0 +1,63 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:complexType name="accountType">
+        <xs:all>
+            <xs:element name="type" type="xs:string"/>
+            <xs:element name="currency" type="xs:string"/>
+            <xs:element name="balance" type="xs:decimal"/>
+            <xs:element name="customerId" type="xs:long"/>
+        </xs:all>
+        <xs:attribute name="id" type="xs:long" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="accountsType">
+        <xs:sequence>
+            <xs:element name="account" type="accountType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="customerType">
+        <xs:all>
+            <xs:element name="accounts" type="accountsType"/>
+            <xs:element name="firstName" type="xs:string"/>
+            <xs:element name="lastName" type="xs:string"/>
+            <xs:element name="addressId" type="xs:long"/>
+            <xs:element name="bankId" type="xs:long"/>
+        </xs:all>
+        <xs:attribute name="id" type="xs:long" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="customersType">
+        <xs:sequence>
+            <xs:element name="customer" type="customerType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+
+    </xs:complexType>
+
+    <xs:complexType name="employeeType">
+        <xs:all>
+            <xs:element name="firstName" type="xs:string"/>
+            <xs:element name="lastName" type="xs:string"/>
+            <xs:element name="addressId" type="xs:long"/>
+            <xs:element name="bankId" type="xs:long"/>
+        </xs:all>
+        <xs:attribute name="id" type="xs:long" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="employeesType">
+        <xs:sequence>
+            <xs:element name="employee" type="employeeType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="bankType">
+        <xs:all>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="addressId" type="xs:long"/>
+            <xs:element name="employees" type="employeesType"/>
+            <xs:element name="customers" type="customersType"/>
+        </xs:all>
+        <xs:attribute name="id" type="xs:long" use="required"/>
+    </xs:complexType>
+
+    <xs:element name="bank" type="bankType"/>
+</xs:schema>

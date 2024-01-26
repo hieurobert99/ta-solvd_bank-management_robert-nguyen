@@ -1,0 +1,44 @@
+<bank xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="bank.xsd" id="1">
+
+    <name>MBank</name>
+    <addressId>1</addressId>
+    <employees>
+        <employee id="1">
+            <firstName>John</firstName>
+            <lastName>Smith</lastName>
+            <addressId>2</addressId>
+            <bankId>1</bankId>
+        </employee>
+    </employees>
+    <customers>
+        <customer id="1">
+            <firstName>Robert</firstName>
+            <lastName>Nguyen</lastName>
+            <addressId>3</addressId>
+            <bankId>1</bankId>
+            <accounts>
+                <account id="1">
+                    <type>Premium</type>
+                    <currency>PLN</currency>
+                    <balance>1000</balance>
+                    <customerId>1</customerId>
+                </account>
+            </accounts>
+        </customer>
+        <customer id="2">
+            <firstName>Peter</firstName>
+            <lastName>Parker</lastName>
+            <addressId>4</addressId>
+            <bankId>1</bankId>
+            <accounts>
+                <account id="2">
+                    <type>Standard</type>
+                    <currency>USD</currency>
+                    <balance>50</balance>
+                    <customerId>2</customerId>
+                </account>
+            </accounts>
+        </customer>
+    </customers>
+</bank>

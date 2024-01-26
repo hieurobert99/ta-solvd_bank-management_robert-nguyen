@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.bankmanagement.persistence.BankRepository">
+    <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO bank(name, addressId) values (#{name}, #{address_id})
+    </insert>
+
+    <sql id="bankSelect">
+        SELECT
+            b.id as bank_id, b.name as bank_name, b.addressId as bank_address_id,
+            e.id as employee_id, e.firstName as employee_first_name, e.lastName as employee_last_name,
+            e.addressId as employee_address_id, e.bankId as employee_bank_id,
+            c.id as customer_id, c.firstName as customer_first_name, c.lastName as customer_last_name,
+            c.addressId as customer_address_id, c.bankId as customer_bank_id
+        FROM bank b
+        LEFT JOIN employees e ON e.bankId = b.id
+        LEFT JOIN company c ON c.bankId = b.id
+
+    </sql>
+
+    <select id="findById" resultMap="BankResultMap">
+        <include refid="bankSelect"/>
+        WHERE b.id = #{id}
+    </select>
+
+    <update id="update">
+        UPDATE bank SET name = #{name}, addressId = #{address_id} WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM bank
+        WHERE id = #{id}
+    </delete>
+
+    <resultMap id="BankResultMap" type="com.solvd.bankmanagement.domain.Bank" autoMapping="false">
+        <id column="bank_id" property="id"/>
+        <result column="bank_name" property="name"/>
+        <result column="bank_address_id" property="addressId"/>
+        <association property="address" resultMap="BankResultMap"/>
+        <collection property="employees" columnPrefix="employee_"
+                    resultMap="com.solvd.bankmanagement.persistence.EmployeeRepository.EmployeeResultMap"/>
+        <collection property="customers" columnPrefix="customer_"
+                    resultMap="com.solvd.bankmanagement.persistence.CustomerRepository.CustomerResultMap"/>
+    </resultMap>
+</mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.bankmanagement.persistence.EmployeeRepository">
+    <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO employees(firstName, lastName, addressId, bankId)
+        VALUES (#{employee.firstName}, #{employee.lastName}, #{employee.addressId}, #{bankId.bankId})
+    </insert>
+    
+    <sql id="employeeSelect">
+        SELECT id, firstName, lastName, addressId, bankId,
+        FROM employees
+    </sql>
+    
+    <select id="findById" resultMap="EmployeeResultMap">
+        SELECT id, firstName, lastName, addressId, bankId
+        FROM employees
+        WHERE id = #{id}
+    </select>
+
+    <select id="findAllByBankId" resultMap="EmployeeResultMap">
+        SELECT id, firstName, lastName, addressId, bankId
+        FROM employees
+        WHERE bankId = #{bankId}
+    </select>
+    
+    <update id="update">
+        UPDATE employees
+        SET firstName = #{firstName}, lastName = #{lastName}, addressId = #{addressId}, bankId = #{bankId}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM employees
+        WHERE id = #{id}
+    </delete>
+
+  
+
+    <resultMap id="EmployeeResultMap" type="com.solvd.bankmanagement.domain.Employee" autoMapping="false">
+        <id property="id" column="id"/>
+        <result property="firstName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+        <result column="address_id" property="addressId"/>
+        <result column="bank_id" property="bankId"/>
+    </resultMap>
+
+</mapper>

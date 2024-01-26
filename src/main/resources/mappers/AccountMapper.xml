@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.bankmanagement.persistance.AccountRepository">
+    <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO accounts (type, currency, balance, customerId)
+        VALUES (#{account.type}, #{account.currency}, #{account.balance}, #{customerId.customerId})    </insert>
+
+    <select id="findById" resultMap="AccountResultMap">
+        SELECT id, type, currency, balance, customerId
+        FROM accounts
+        WHERE id = #{id}
+    </select>
+
+    <select id="findAllByCustomerId" resultMap="AccountResultMap">
+        SELECT id, type, currency, balance, customerId
+        FROM accounts
+        WHERE customerId = #{customerId}
+    </select>
+
+    <update id="update">
+        UPDATE accounts
+        SET type = #{type}, currency = #{currency}, balance = #{balance}, customerId = #{customerId}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM accounts
+        WHERE id = #{id}
+    </delete>
+
+
+    <resultMap id="AccountResultMap" type="com.solvd.bankmanagement.domain.Account" autoMapping="false">
+        <id property="id" column="id"/>
+        <result property="type" column="type"/>
+        <result property="currency" column="currency"/>
+        <result property="balance" column="balance"/>
+        <result property="customerId" column="customer_id"/>
+    </resultMap>
+</mapper>
